@@ -11,6 +11,14 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$coroutines_version"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutines_version"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:$coroutines_version"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-debug:$coroutines_version"
+    compile "com.squareup.retrofit2:retrofit:2.4.0"
+    compile "com.squareup.retrofit2:converter-jackson:2.4.0"
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7"
 }
 
 compileKotlin {
@@ -18,4 +26,9 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+sourceSets {
+    main.kotlin.srcDirs = ['src']
+    main.resources.srcDirs = ['resources']
 }
