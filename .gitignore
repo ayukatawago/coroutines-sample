@@ -1,0 +1,13 @@
+# Gradle files
+.gradle
+
+# Idea
+/.idea/*
+!/.idea/codeStyles/
+
+# output
+out
+
+# OSX files
+.DS_Store
+
