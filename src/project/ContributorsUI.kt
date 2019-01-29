@@ -1,12 +1,12 @@
 package project
 
 import kotlinx.coroutines.*
-import kotlinx.coroutines.debug.DebugProbes
 import kotlinx.coroutines.swing.Swing
+import project.data.RequestData
+import project.data.User
 import java.awt.Dimension
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
-import java.awt.Insets
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import java.util.prefs.Preferences
@@ -14,10 +14,7 @@ import javax.swing.*
 import javax.swing.table.DefaultTableModel
 import kotlin.coroutines.CoroutineContext
 
-
-@ExperimentalCoroutinesApi
 fun main() {
-    DebugProbes.install()
     setDefaultFontSize(18f)
     ContributorsUI().apply {
         pack()
@@ -26,7 +23,6 @@ fun main() {
     }
 }
 
-private val INSETS = Insets(3, 10, 3, 10)
 private val COLUMNS = arrayOf("Login", "Contributions")
 
 @Suppress("CONFLICTING_INHERITED_JVM_DECLARATIONS")
@@ -137,11 +133,6 @@ class ContributorsUI : JFrame("GitHub Contributors"), CoroutineScope {
         }.toTypedArray(), COLUMNS)
     }
 
-    private fun updateEnabled(enabled: Boolean) {
-        load.isEnabled = enabled
-        cancel.isEnabled = !enabled
-    }
-
     private fun prefNode(): Preferences = Preferences.userRoot().node("ContributorsUI")
 
     private fun loadPrefs() {
@@ -162,40 +153,11 @@ class ContributorsUI : JFrame("GitHub Contributors"), CoroutineScope {
             sync()
         }
     }
-}
 
-fun variantOf(str: String): Variant =
-    try {
-        Variant.valueOf(str)
-    } catch (e: IllegalArgumentException) {
-        Variant.values()[0]
-    }
-
-fun JPanel.addLabeled(label: String, component: JComponent) {
-    add(JLabel(label), GridBagConstraints().apply {
-        gridx = 0
-        insets = INSETS
-    })
-    add(component, GridBagConstraints().apply {
-        gridx = 1
-        insets = INSETS
-        anchor = GridBagConstraints.WEST
-        fill = GridBagConstraints.HORIZONTAL
-        weightx = 1.0
-    })
-}
-
-fun JPanel.addWide(component: JComponent, constraints: GridBagConstraints.() -> Unit = {}) {
-    add(component, GridBagConstraints().apply {
-        gridx = 0
-        gridwidth = 2
-        insets = INSETS
-        constraints()
-    })
-}
-
-fun JPanel.addWideSeparator() {
-    addWide(JSeparator()) {
-        fill = GridBagConstraints.HORIZONTAL
-    }
+    private fun variantOf(str: String): Variant =
+        try {
+            Variant.valueOf(str)
+        } catch (e: IllegalArgumentException) {
+            Variant.values()[0]
+        }
 }

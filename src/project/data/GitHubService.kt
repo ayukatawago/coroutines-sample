@@ -1,6 +1,5 @@
-package project
+package project.data
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -23,26 +22,8 @@ interface GitHubService {
     ): Call<List<User>>
 }
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class Repo(
-    val id: Long,
-    val name: String
-)
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class User(
-    val login: String,
-    val contributions: Int
-)
-
-data class RequestData(
-    val username: String,
-    val password: String,
-    val org: String
-)
-
 fun createGitHubService(username: String, password: String): GitHubService {
-    val authToken = "Basic " + Base64.getEncoder().encode("$username:$password".toByteArray()).toString(Charsets.UTF_8);
+    val authToken = "Basic " + Base64.getEncoder().encode("$username:$password".toByteArray()).toString(Charsets.UTF_8)
     val httpClient = OkHttpClient.Builder()
         .addInterceptor { chain ->
             val original = chain.request()
