@@ -93,7 +93,8 @@ class ContributorsUI : JFrame("GitHub Contributors"), CoroutineScope {
         val startTime = System.currentTimeMillis()
         when (selectedVariant()) {
             Variant.BLOCKING -> {
-                // TODO Blocking UI thread
+                val users = loadContributorsBlocking(req)
+                updateResults(users)
             }
             Variant.BACKGROUND -> {
                 // TODO Blocking a background thread
