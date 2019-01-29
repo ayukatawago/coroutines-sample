@@ -19,6 +19,7 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:2.4.0"
     compile "com.squareup.retrofit2:converter-jackson:2.4.0"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7"
+    compile 'ch.qos.logback:logback-classic:1.0.13'
 }
 
 compileKotlin {

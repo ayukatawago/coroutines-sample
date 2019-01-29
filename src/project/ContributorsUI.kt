@@ -89,6 +89,8 @@ class ContributorsUI : JFrame("GitHub Contributors"), CoroutineScope {
     private fun doLoad() {
         clearResults()
         val req = RequestData(username.text, password.text, org.text)
+
+        val startTime = System.currentTimeMillis()
         when (selectedVariant()) {
             Variant.BLOCKING -> {
                 // TODO Blocking UI thread
@@ -121,6 +123,8 @@ class ContributorsUI : JFrame("GitHub Contributors"), CoroutineScope {
                 // TODO actor implementation
             }
         }
+        val endTime = System.currentTimeMillis()
+        log.info("elapsed time: ${endTime - startTime}")
     }
 
     private fun clearResults() {
