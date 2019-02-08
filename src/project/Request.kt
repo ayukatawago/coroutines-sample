@@ -3,6 +3,7 @@ package project
 import project.data.RequestData
 import project.data.User
 import project.data.createGitHubService
+import kotlin.concurrent.thread
 
 fun loadContributorsBlocking(req: RequestData): List<User> {
     val service = createGitHubService(req.username, req.password)
@@ -20,4 +21,11 @@ fun loadContributorsBlocking(req: RequestData): List<User> {
 
     log.info("Total: ${contribs.size} contributors")
     return contribs
+}
+
+fun loadContributorsBackground(req: RequestData, callback: (List<User>) -> Unit) {
+    thread {
+        val users = loadContributorsBlocking(req)
+        callback(users)
+    }
 }
