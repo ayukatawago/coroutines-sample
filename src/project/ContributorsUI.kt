@@ -97,7 +97,11 @@ class ContributorsUI : JFrame("GitHub Contributors"), CoroutineScope {
                 updateResults(users)
             }
             Variant.BACKGROUND -> {
-                // TODO Blocking a background thread
+                SwingUtilities.invokeLater {
+                    loadContributorsBackground(req) { users ->
+                        updateResults(users)
+                    }
+                }
             }
             Variant.CALLBACKS -> {
                 // TODO Using callbacks
@@ -124,6 +128,7 @@ class ContributorsUI : JFrame("GitHub Contributors"), CoroutineScope {
                 // TODO actor implementation
             }
         }
+
         val endTime = System.currentTimeMillis()
         log.info("elapsed time: ${endTime - startTime}")
     }
